@@ -9,13 +9,68 @@ package br.com.parus.telas;
  *
  * @author adrieldev
  */
+import java.sql.*;
+import br.com.parus.dal.ModuloConexao;
+import javax.swing.JOptionPane;
+
 public class TelaPessoa extends javax.swing.JInternalFrame {
+
+    Connection conexao = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
 
     /**
      * Creates new form TelaPessoa
      */
     public TelaPessoa() {
         initComponents();
+        conexao = ModuloConexao.conector();
+
+    }
+
+    private void consultar() {
+        String sql = "select * from pessoa where cpf=?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtPessoaCpf.getText());
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                txtPessoaNome.setText(rs.getString(2));
+                cboPessoaSituacao.setSelectedItem(rs.getString(3));
+                txtPessoaAviao.setText(rs.getString(4));
+            } else {
+                //exibe msg de erro
+                JOptionPane.showMessageDialog(null, "Pessoa não cadastrada");
+                //limpar campos
+                txtPessoaNome.setText(null);
+                txtPessoaAviao.setText(null);
+                cboPessoaSituacao.setSelectedItem(null);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    //método para adicionar usuários
+    private void adicionar() {
+        String sql = "insert into pessoa(cpf, nome, situacao, aviao) values(?,?,?,?)";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtPessoaCpf.getText());
+            pst.setString(2, txtPessoaNome.getText());
+            pst.setString(3, cboPessoaSituacao.getSelectedItem().toString());
+            pst.setString(4, txtPessoaAviao.getText());
+
+            //adicionar a tabela os dados
+            int adicionado = pst.executeUpdate();
+            if (adicionado > 0) {
+                JOptionPane.showMessageDialog(null, "usuário adicionado com sucesso");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+
+        }
     }
 
     /**
@@ -30,15 +85,15 @@ public class TelaPessoa extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         txtPessoaCpf = new javax.swing.JTextField();
         txtPessoaNome = new javax.swing.JTextField();
-        txtPessoaSituacao = new javax.swing.JTextField();
+        txtPessoaAviao = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        cboPessoaAviao = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        cboPessoaSituacao = new javax.swing.JComboBox<>();
+        btnPessoaCreate = new javax.swing.JButton();
+        btnPessoaRead = new javax.swing.JButton();
+        btnPessoaUpdate = new javax.swing.JButton();
+        btnPessoaDelete = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -54,24 +109,39 @@ public class TelaPessoa extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Avião");
 
-        cboPessoaAviao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Piloto", "Co-piloto", "Comissário" }));
-        cboPessoaAviao.setToolTipText("Piloto\nCo-piloto\nComissário");
+        cboPessoaSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Piloto", "Co-piloto", "Comissário", "Passageiro" }));
+        cboPessoaSituacao.setToolTipText("Piloto\nCo-piloto\nComissário\nPassageiro");
+        cboPessoaSituacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboPessoaSituacaoActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("Criar");
-        jButton1.setToolTipText("Criar");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPessoaCreate.setText("Criar");
+        btnPessoaCreate.setToolTipText("Criar");
+        btnPessoaCreate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPessoaCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPessoaCreateActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Procurar");
-        jButton2.setToolTipText("Procurar");
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPessoaRead.setText("Procurar");
+        btnPessoaRead.setToolTipText("Procurar");
+        btnPessoaRead.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPessoaRead.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPessoaReadActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Alterar");
-        jButton3.setToolTipText("Alterar");
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPessoaUpdate.setText("Alterar");
+        btnPessoaUpdate.setToolTipText("Alterar");
+        btnPessoaUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jButton4.setText("Deletar");
-        jButton4.setToolTipText("Deletar");
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPessoaDelete.setText("Deletar");
+        btnPessoaDelete.setToolTipText("Deletar");
+        btnPessoaDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,21 +160,21 @@ public class TelaPessoa extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtPessoaNome)
                             .addComponent(txtPessoaCpf)
-                            .addComponent(txtPessoaSituacao)
-                            .addComponent(cboPessoaAviao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(txtPessoaAviao)
+                            .addComponent(cboPessoaSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPessoaCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                        .addComponent(btnPessoaRead)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPessoaUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)))
+                        .addComponent(btnPessoaDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnPessoaCreate, btnPessoaDelete, btnPessoaRead, btnPessoaUpdate});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,38 +190,52 @@ public class TelaPessoa extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboPessoaAviao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboPessoaSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPessoaSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPessoaAviao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(btnPessoaCreate)
+                    .addComponent(btnPessoaRead)
+                    .addComponent(btnPessoaUpdate)
+                    .addComponent(btnPessoaDelete))
                 .addGap(76, 76, 76))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnPessoaCreate, btnPessoaDelete, btnPessoaRead, btnPessoaUpdate});
+
+        cboPessoaSituacao.getAccessibleContext().setAccessibleDescription("Piloto\nCo-piloto\nComissário\nPassageiro");
 
         setBounds(0, 0, 400, 400);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cboPessoaSituacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboPessoaSituacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboPessoaSituacaoActionPerformed
+
+    private void btnPessoaReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPessoaReadActionPerformed
+        consultar();
+    }//GEN-LAST:event_btnPessoaReadActionPerformed
+
+    private void btnPessoaCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPessoaCreateActionPerformed
+        adicionar();
+    }//GEN-LAST:event_btnPessoaCreateActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cboPessoaAviao;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnPessoaCreate;
+    private javax.swing.JButton btnPessoaDelete;
+    private javax.swing.JButton btnPessoaRead;
+    private javax.swing.JButton btnPessoaUpdate;
+    private javax.swing.JComboBox<String> cboPessoaSituacao;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JTextField txtPessoaAviao;
     private javax.swing.JTextField txtPessoaCpf;
     private javax.swing.JTextField txtPessoaNome;
-    private javax.swing.JTextField txtPessoaSituacao;
     // End of variables declaration//GEN-END:variables
 }

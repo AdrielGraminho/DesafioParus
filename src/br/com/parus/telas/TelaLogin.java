@@ -50,6 +50,7 @@ public class TelaLogin extends javax.swing.JFrame {
      */
     public TelaLogin() {
         initComponents();
+        
         conexao = ModuloConexao.conector();
         //abaixo serve de apoio ao status da conexão
         //System.out.println(conexao);
