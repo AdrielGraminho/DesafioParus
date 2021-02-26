@@ -9,7 +9,7 @@ package br.com.parus.telas;
  *
  * @author adrieldev
  */
-public class TelaPrincipal extends javax.swing.JPanel {
+public class TelaPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaPrincipal
@@ -27,31 +27,138 @@ public class TelaPrincipal extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        Desktop = new javax.swing.JDesktopPane();
+        btnHome = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        MenuCadastro = new javax.swing.JMenu();
+        MenCadPessoa = new javax.swing.JMenuItem();
+        MenCadAviao = new javax.swing.JMenuItem();
+        MenuRelatório = new javax.swing.JMenu();
+        MenuRelPessoa = new javax.swing.JMenuItem();
+        MenuRelAviao = new javax.swing.JMenuItem();
 
-        jLabel1.setText("jLabel1");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Home");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setResizable(false);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        Desktop.setPreferredSize(new java.awt.Dimension(400, 400));
+
+        btnHome.setText("Home");
+        btnHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHomeActionPerformed(evt);
+            }
+        });
+
+        MenuCadastro.setText("Cadastro");
+
+        MenCadPessoa.setText("Pessoa");
+        MenCadPessoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenCadPessoaActionPerformed(evt);
+            }
+        });
+        MenuCadastro.add(MenCadPessoa);
+
+        MenCadAviao.setText("Avião");
+        MenuCadastro.add(MenCadAviao);
+
+        jMenuBar1.add(MenuCadastro);
+
+        MenuRelatório.setText("Relatório");
+
+        MenuRelPessoa.setText("Pessoa");
+        MenuRelatório.add(MenuRelPessoa);
+
+        MenuRelAviao.setText("Avião");
+        MenuRelatório.add(MenuRelAviao);
+
+        jMenuBar1.add(MenuRelatório);
+
+        setJMenuBar(jMenuBar1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(122, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(116, 116, 116))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(Desktop, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnHome)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(jLabel1)
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addGap(113, 113, 113)
+                .addComponent(btnHome)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(Desktop, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 77, Short.MAX_VALUE))
         );
+
+        setSize(new java.awt.Dimension(510, 530));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+        TelaPrincipal principal = new TelaPrincipal();
+        principal.setVisible(true);
+        this.dispose();    }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void MenCadPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenCadPessoaActionPerformed
+            //abrir abaixo o form TelaPessoa
+            TelaPessoa pessoa = new TelaPessoa();
+            pessoa.setVisible(true);
+            Desktop.add(pessoa);
+    }//GEN-LAST:event_MenCadPessoaActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new TelaPrincipal().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JDesktopPane Desktop;
+    private javax.swing.JMenuItem MenCadAviao;
+    private javax.swing.JMenuItem MenCadPessoa;
+    private javax.swing.JMenu MenuCadastro;
+    private javax.swing.JMenuItem MenuRelAviao;
+    private javax.swing.JMenuItem MenuRelPessoa;
+    private javax.swing.JMenu MenuRelatório;
+    private javax.swing.JButton btnHome;
+    private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }
-
