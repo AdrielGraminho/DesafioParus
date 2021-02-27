@@ -44,7 +44,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         Desktop.setPreferredSize(new java.awt.Dimension(400, 400));
 
-        btnHome.setText("Home");
+        btnHome.setText("Início");
         btnHome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomeActionPerformed(evt);
@@ -78,10 +78,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         MenuRelatório.setText("Relatório");
 
-        MenuRelPessoa.setText("Pessoa");
+        MenuRelPessoa.setText("Listar Voos");
+        MenuRelPessoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuRelPessoaActionPerformed(evt);
+            }
+        });
         MenuRelatório.add(MenuRelPessoa);
 
-        MenuRelAviao.setText("Avião");
+        MenuRelAviao.setText("Listar Aviões");
+        MenuRelAviao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuRelAviaoActionPerformed(evt);
+            }
+        });
         MenuRelatório.add(MenuRelAviao);
 
         jMenuBar1.add(MenuRelatório);
@@ -94,18 +104,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(Desktop, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnHome)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(113, 113, 113)
-                .addComponent(btnHome)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Desktop, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Desktop, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHome))
                 .addGap(0, 77, Short.MAX_VALUE))
         );
 
@@ -134,6 +142,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Aviao.setVisible(true);
         Desktop.add(Aviao);
     }//GEN-LAST:event_MenCadAviaoActionPerformed
+
+    private void MenuRelAviaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuRelAviaoActionPerformed
+        TelaRelAviões RelAviao = new TelaRelAviões();
+        RelAviao.setVisible(true);
+        Desktop.add(RelAviao);
+    }//GEN-LAST:event_MenuRelAviaoActionPerformed
+
+    private void MenuRelPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuRelPessoaActionPerformed
+        TelaRelVoos RelVoos = new TelaRelVoos();
+        RelVoos.setVisible(true);
+        Desktop.add(RelVoos);
+    }//GEN-LAST:event_MenuRelPessoaActionPerformed
 
     /**
      * @param args the command line arguments
