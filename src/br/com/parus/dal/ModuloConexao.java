@@ -19,9 +19,9 @@ public class ModuloConexao {
         //chamar o driver do mariaDB:
         String driver = "com.mysql.jdbc.Driver";
         // Armazenando informações referente ao banco
-        String url = "jdbc:mysql://localhost:3306/Desafio";
+        String url = "jdbc:mysql://52.3.187.61:3306/Desafio";
         String user = "adrieldev";
-        String password = "c13082003";
+        String password = "adrieldev";
         
         //Estabelecendo a conexão com o banco
         try {
