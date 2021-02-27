@@ -38,7 +38,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         MenuRelAviao = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Home");
+        setTitle("Desafio Parus");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
@@ -52,6 +52,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         MenuCadastro.setText("Cadastro");
+        MenuCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuCadastroActionPerformed(evt);
+            }
+        });
 
         MenCadPessoa.setText("Pessoa");
         MenCadPessoa.addActionListener(new java.awt.event.ActionListener() {
@@ -62,6 +67,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         MenuCadastro.add(MenCadPessoa);
 
         MenCadAviao.setText("Avião");
+        MenCadAviao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenCadAviaoActionPerformed(evt);
+            }
+        });
         MenuCadastro.add(MenCadAviao);
 
         jMenuBar1.add(MenuCadastro);
@@ -109,11 +119,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.dispose();    }//GEN-LAST:event_btnHomeActionPerformed
 
     private void MenCadPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenCadPessoaActionPerformed
-            //abrir abaixo o form TelaPessoa
-            TelaPessoa pessoa = new TelaPessoa();
-            pessoa.setVisible(true);
-            Desktop.add(pessoa);
+        //abrir abaixo o form TelaPessoa
+        TelaPessoa pessoa = new TelaPessoa();
+        pessoa.setVisible(true);
+        Desktop.add(pessoa);
     }//GEN-LAST:event_MenCadPessoaActionPerformed
+
+    private void MenuCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCadastroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuCadastroActionPerformed
+
+    private void MenCadAviaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenCadAviaoActionPerformed
+        TelaAviao Aviao = new TelaAviao();
+        Aviao.setVisible(true);
+        Desktop.add(Aviao);
+    }//GEN-LAST:event_MenCadAviaoActionPerformed
 
     /**
      * @param args the command line arguments

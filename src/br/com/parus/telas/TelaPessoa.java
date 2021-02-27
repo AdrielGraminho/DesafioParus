@@ -51,7 +51,7 @@ public class TelaPessoa extends javax.swing.JInternalFrame {
         }
     }
 
-    //método para adicionar usuários
+    //método para adicionar pessoas
     private void adicionar() {
         String sql = "insert into pessoa(cpf, nome, situacao, aviao) values(?,?,?,?)";
         try {
@@ -65,12 +65,66 @@ public class TelaPessoa extends javax.swing.JInternalFrame {
             int adicionado = pst.executeUpdate();
             if (adicionado > 0) {
                 JOptionPane.showMessageDialog(null, "usuário adicionado com sucesso");
+                txtPessoaCpf.setText(null);
+                txtPessoaNome.setText(null);
+                txtPessoaAviao.setText(null);
+                cboPessoaSituacao.setSelectedItem(null);
             }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
 
         }
+    }
+
+    //método para modificar cadastro de pessoas
+    private void alterar() {
+        String sql = "update pessoa set nome=?, situacao=?, aviao=? where cpf=?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtPessoaNome.getText());
+            pst.setString(2, cboPessoaSituacao.getSelectedItem().toString());
+            pst.setString(3, txtPessoaAviao.getText());
+            pst.setString(4, txtPessoaCpf.getText());
+            //adicionar a tabela os dados
+            int modificado = pst.executeUpdate();
+            if (modificado > 0) {
+                JOptionPane.showMessageDialog(null, "Cadastro modificado com sucesso");
+                txtPessoaCpf.setText(null);
+                txtPessoaNome.setText(null);
+                txtPessoaAviao.setText(null);
+                cboPessoaSituacao.setSelectedItem(null);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+    }
+
+    //método responsável por remover cadastro de uma pessoa
+    private void deletar() {
+        int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja remover este cadastro?", "Atenção", JOptionPane.YES_NO_OPTION);
+        if (confirma == JOptionPane.YES_OPTION) {
+            String sql = "delete from pessoa where cpf=?";
+
+            try {
+                pst = conexao.prepareStatement(sql);
+                pst.setString(1, txtPessoaCpf.getText());
+                int apagado = pst.executeUpdate();
+                if (apagado > 0) {
+                    JOptionPane.showMessageDialog(null, "Usuário removido com sucesso");
+                    txtPessoaCpf.setText(null);
+                    txtPessoaNome.setText(null);
+                    txtPessoaAviao.setText(null);
+                    cboPessoaSituacao.setSelectedItem(null);
+
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+
     }
 
     /**
@@ -101,11 +155,11 @@ public class TelaPessoa extends javax.swing.JInternalFrame {
         setTitle("Pessoas");
         setPreferredSize(new java.awt.Dimension(350, 350));
 
-        jLabel5.setText("CPF");
+        jLabel5.setText("CPF*");
 
-        jLabel6.setText("Nome");
+        jLabel6.setText("Nome*");
 
-        jLabel7.setText("Situação");
+        jLabel7.setText("Situação*");
 
         jLabel8.setText("Avião");
 
@@ -138,10 +192,20 @@ public class TelaPessoa extends javax.swing.JInternalFrame {
         btnPessoaUpdate.setText("Alterar");
         btnPessoaUpdate.setToolTipText("Alterar");
         btnPessoaUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPessoaUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPessoaUpdateActionPerformed(evt);
+            }
+        });
 
         btnPessoaDelete.setText("Deletar");
         btnPessoaDelete.setToolTipText("Deletar");
         btnPessoaDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPessoaDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPessoaDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -222,6 +286,15 @@ public class TelaPessoa extends javax.swing.JInternalFrame {
     private void btnPessoaCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPessoaCreateActionPerformed
         adicionar();
     }//GEN-LAST:event_btnPessoaCreateActionPerformed
+
+    private void btnPessoaUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPessoaUpdateActionPerformed
+        //chamar método alterar
+        alterar();
+    }//GEN-LAST:event_btnPessoaUpdateActionPerformed
+
+    private void btnPessoaDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPessoaDeleteActionPerformed
+        deletar();
+    }//GEN-LAST:event_btnPessoaDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
