@@ -32,8 +32,14 @@ public class TelaLogin extends javax.swing.JFrame {
 
             //se existir usuário e senha
             if (rs.next()) {
+                //obter o usuário
+                String perfil=rs.getString(1);
+                //System.out.println(perfil);
+                
+                        
                 TelaPrincipal principal = new TelaPrincipal();
                 principal.setVisible(true);
+                TelaPrincipal.usuário.setText(perfil);
                 this.dispose();
                 conexao.close();
             } else {
